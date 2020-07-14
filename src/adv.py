@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player1 = Player('Gary', room['outside'])
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +52,26 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+options = ['n', 'e', 's', 'w', 'q', ]
+selection = ""
+while selection != "q":
+    print("\n")
+    print(player1.location.name)
+    print(player1.location.description)
+
+    selection = input('[n] North [e] East [s] South [w] West [get ITEM_NAME] Pickup Item [drop ITEM_NAME] Drop Item [q] Quit\n')
+
+    if selection not in "neswq":
+        print("Please make a valid selection.")
+    elif selection == "q":
+        print("See you later!")
+    elif selection == "n" and hasattr(player1.location, 'n_to'):
+        player1.location = player1.location.n_to
+    elif selection == "e" and hasattr(player1.location, 'e_to'):
+        player1.location = player1.location.e_to
+    elif selection == "s" and hasattr(player1.location, 's_to'):
+        player1.location = player1.location.s_to
+    elif selection == "w" and hasattr(player1.location, 'w_to'):
+        player1.location = player1.location.w_to
+    else:
+        print("That movement is not allowed.")
